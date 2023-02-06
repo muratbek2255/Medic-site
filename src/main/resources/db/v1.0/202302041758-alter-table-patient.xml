@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="alter-patient-users-table" author="murat_q">
+        <sql>
+            ALTER TABLE medic_kg.patients
+            ALTER COLUMN locked TYPE boolean,
+            ALTER COLUMN enabled TYPE boolean;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

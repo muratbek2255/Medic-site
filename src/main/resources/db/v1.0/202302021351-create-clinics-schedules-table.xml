@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-clinics-schedules-table" author="murat_q">
+        <sql>
+            CREATE TABLE medic_kg.clinic_schedules (
+                                                      id serial PRIMARY KEY not null,
+                                                      day varchar(255) not null,
+                                                      hour_start varchar(255) not null,
+                                                      hour_end varchar(500) not null,
+                                                      work_24h BOOLEAN default FALSE,
+                                                      is_busy varchar(255) not null,
+                                                      fk_clinic_branch_id int,
+                                                      CONSTRAINT fk_clinicschedules_clinicbranches
+                                                          FOREIGN KEY(fk_clinic_branch_id)
+                                                          REFERENCES medic_kg.clinic_branches(id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

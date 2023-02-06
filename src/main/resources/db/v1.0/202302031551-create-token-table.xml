@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-tokens-users-table" author="murat_q">
+        <sql>
+            CREATE TABLE medic_kg.user_tokens (
+                                                          id serial PRIMARY KEY not null,
+                                                          token varchar(250) not null,
+                                                          created_at timestamp not null ,
+                                                          expired_at timestamp not null ,
+                                                          confirmed_at timestamp,
+                                                          fk_patient_id int not null,
+                                                          CONSTRAINT fk_tokens_patient
+                                                              FOREIGN KEY(fk_patient_id)
+                                                                  REFERENCES medic_kg.patients(id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

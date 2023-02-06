@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-patient-users-table" author="murat_q">
+        <sql>
+            CREATE TABLE medic_kg.patients (
+                                               id serial PRIMARY KEY not null,
+                                               username varchar(255) not null,
+                                               email varchar(255) not null,
+                                               avatar varchar(255) not null,
+                                               gender varchar(30) not null ,
+                                               date_birthday timestamp not null,
+                                               password varchar(255) not null,
+                                               role_id int not null,
+                                               blood_type int,
+                                               info varchar(255) not null,
+                                               address varchar(255) not null,
+                                               locked Boolean not null DEFAULT FALSE,
+                                               enabled Boolean not null DEFAULT FALSE,
+                                               CONSTRAINT fk_roles_users
+                                                   FOREIGN KEY(role_id)
+                                                       REFERENCES medic_kg.roles(id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
