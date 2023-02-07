@@ -16,7 +16,7 @@
                                                           fk_patient_id int not null,
                                                           CONSTRAINT fk_tokens_patient
                                                               FOREIGN KEY(fk_patient_id)
-                                                                  REFERENCES medic_kg.patients(id)
+                                                                  REFERENCES medic_kg.users(id)
             );
         </sql>
     </changeSet>

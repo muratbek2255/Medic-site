@@ -1,7 +1,7 @@
 package com.example.medic_kg.service.appointment.impl;
 
 import com.example.medic_kg.dto.AppointmentRequest;
-import com.example.medic_kg.dto.AppointmentResponse;
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
 import com.example.medic_kg.entity.doctor.Appointment;
 import com.example.medic_kg.repository.doctor.AppointmentRepository;
 import com.example.medic_kg.repository.doctor.DoctorRepository;
@@ -42,7 +42,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public ResponseEntity<AppointmentResponse> add(AppointmentRequest appointmentRequest) {
+    public ResponseEntity<CreateUpdateDeleteResponse> add(AppointmentRequest appointmentRequest) {
         var appointment = Appointment.builder()
                 .date(appointmentRequest.getDate())
                 .approved(Boolean.TRUE)
@@ -53,7 +53,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         System.out.println(appointmentRequest);
         appointmentRepository.save(appointment);
 
-        return ResponseEntity.ok(AppointmentResponse
+        return ResponseEntity.ok(CreateUpdateDeleteResponse
                 .builder()
                 .msg("Appointment created!!!")
                 .build());

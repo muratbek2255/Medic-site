@@ -1,7 +1,7 @@
 package com.example.medic_kg.service.appointment;
 
 import com.example.medic_kg.dto.AppointmentRequest;
-import com.example.medic_kg.dto.AppointmentResponse;
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
 import com.example.medic_kg.entity.doctor.Appointment;
 import org.springframework.http.ResponseEntity;
 
@@ -14,7 +14,7 @@ public interface AppointmentService {
 
     public Optional<Appointment> findById(int id);
 
-    public ResponseEntity<AppointmentResponse> add(AppointmentRequest appointmentRequest);
+    public ResponseEntity<CreateUpdateDeleteResponse> add(AppointmentRequest appointmentRequest);
 
     public void update(Appointment appointment);
 

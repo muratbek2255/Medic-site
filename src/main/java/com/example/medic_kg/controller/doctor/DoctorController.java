@@ -1,9 +1,13 @@
 package com.example.medic_kg.controller.doctor;
 
+import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
+import com.example.medic_kg.dto.DoctorRequest;
 import com.example.medic_kg.entity.doctor.Doctor;
 import com.example.medic_kg.service.doctor.impl.DoctorServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,46 +22,27 @@ public class DoctorController {
 
 
     @GetMapping("/all/doctors")
-    public List<Doctor> showAllDoctors() {
-        List<Doctor> allDoctors = doctorService.getALl();
-
-        return allDoctors;
+    public List<DoctorRequest> showAllDoctors() {
+        return doctorService.getALl();
     }
 
     @GetMapping("/doctor/{id}")
-    public Optional<Doctor> getDoctor(@PathVariable int id) {
-        Optional<Doctor> doctor = doctorService.findById(id);
-
-        if(doctor == null) {
-            throw new NoSuchElementException("There is no doctor with id: "+ id + " in DB");
-        }
-
-        return doctor;
+    public DoctorRequest getDoctor(@PathVariable int id) {
+        return doctorService.findById(id);
     }
 
     @PostMapping("/add/doctors")
-    public Doctor addDoctor(@RequestBody Doctor doctor) {
-        doctorService.add(doctor);
-
-        return doctor;
+    public ResponseEntity<CreateUpdateDeleteResponse> addDoctor(@RequestBody DoctorRequest doctorRequest) {
+        return ResponseEntity.ok(doctorService.add(doctorRequest));
     }
 
     @PutMapping("/update/doctors")
-    public Doctor updateDoctor(@RequestBody Doctor doctor) {
-        doctorService.update(doctor);
-
-        return doctor;
+    public ResponseEntity<CreateUpdateDeleteResponse> updateDoctor(@RequestBody DoctorRequest doctorRequest) {
+        return ResponseEntity.ok(doctorService.update(doctorRequest));
     }
 
     @DeleteMapping("/delete/doctor/{id}")
-    public String deleteEmployee(@PathVariable int id) {
-        Optional<Doctor> doctor = doctorService.findById(id);
-
-        if(doctor == null) {
-            throw new NoSuchElementException("There is no doctor with ID = " + id + " in DataBase");
-        }
-
-        doctorService.delete(id);
-        return "Doctor with ID = " + id + " was deleted";
+    public ResponseEntity<CreateUpdateDeleteResponse> deleteEmployee(@PathVariable int id) {
+        return ResponseEntity.ok(doctorService.delete(id));
     }
 }

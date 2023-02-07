@@ -5,18 +5,19 @@ import com.example.medic_kg.dto.AuthenticationResponse;
 import com.example.medic_kg.dto.RegisterRequest;
 import com.example.medic_kg.email.EmailSender;
 import com.example.medic_kg.entity.enums.user.Gender;
-import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.entity.roles.Roles;
 import com.example.medic_kg.entity.token.ConfirmationToken;
+import com.example.medic_kg.entity.user.User;
 import com.example.medic_kg.repository.ConformationTokenRepository;
 import com.example.medic_kg.repository.RoleRepository;
 import com.example.medic_kg.repository.patient.PatientRepository;
+import com.example.medic_kg.repository.user.UserRepository;
 import com.example.medic_kg.security.JwtService;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,21 +27,9 @@ import java.util.UUID;
 
 @Service
 public class AuthenticationService {
-    @Autowired
-    private final PatientRepository repository;
+    private final PatientRepository patientRepository;
 
-    @Autowired
-    public AuthenticationService(PatientRepository repository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager, ConformationTokenService conformationTokenService, ConformationTokenRepository conformationTokenRepository, EmailSender emailSender) {
-        this.repository = repository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
-        this.conformationTokenService = conformationTokenService;
-        this.conformationTokenRepository = conformationTokenRepository;
-        this.emailSender = emailSender;
-    }
-
+    private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -50,9 +39,22 @@ public class AuthenticationService {
     private final ConformationTokenRepository conformationTokenRepository;
     private final EmailSender emailSender;
 
+    @Autowired
+    public AuthenticationService(PatientRepository patientRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager, ConformationTokenService conformationTokenService, ConformationTokenRepository conformationTokenRepository, EmailSender emailSender) {
+        this.patientRepository = patientRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+        this.conformationTokenService = conformationTokenService;
+        this.conformationTokenRepository = conformationTokenRepository;
+        this.emailSender = emailSender;
+    }
+
     public AuthenticationResponse register(RegisterRequest request) {
         Roles roles = roleRepository.findByName("ROLE_PATIENT");
-        var user = Patient.builder()
+        var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .avatar(request.getAvatar())
@@ -60,13 +62,10 @@ public class AuthenticationService {
                 .date_birthday(request.getDate_birthday())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(roles)
-                .bloodType(request.getBloodType())
-                .info(request.getInfo())
-                .address(request.getAddress())
                 .locked(Boolean.FALSE)
                 .enabled(Boolean.FALSE)
                 .build();
-        repository.save(user);
+        userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         String token = UUID.randomUUID().toString();
 
@@ -99,7 +98,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail());
+        var user = userRepository.findByEmail(request.getEmail());
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -107,7 +106,7 @@ public class AuthenticationService {
     }
 
     public int enableAppUser(String email) {
-        return repository.enableAppUser(email);
+        return userRepository.enableAppUser(email);
     }
 
     @Transactional
@@ -129,7 +128,7 @@ public class AuthenticationService {
 
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         enableAppUser(
-                confirmationToken.getPatient().getEmail());
+                confirmationToken.getUser().getEmail());
         return "confirmed";
     }
 

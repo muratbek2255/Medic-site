@@ -18,7 +18,4 @@ public class RegisterRequest {
     private Timestamp date_birthday;
     private String password;
     private Roles role;
-    private Integer bloodType;
-    private String info;
-    private String address;
 }

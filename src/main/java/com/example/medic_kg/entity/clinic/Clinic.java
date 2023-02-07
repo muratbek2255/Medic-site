@@ -1,8 +1,11 @@
 package com.example.medic_kg.entity.clinic;
 
 
+import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
@@ -40,6 +43,10 @@ public class Clinic {
 
     @Column(name = "is_draft")
     private Boolean isDraft;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clinic", fetch = FetchType.LAZY)
     List<ClinicBranch> clinicBranches;

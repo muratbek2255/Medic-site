@@ -1,9 +1,14 @@
 package com.example.medic_kg.entity.doctor;
 
+import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.DoctorRequest;
+import com.example.medic_kg.entity.clinic.Clinic;
 import com.example.medic_kg.entity.enums.user.Gender;
 import com.example.medic_kg.entity.roles.Roles;
+import com.example.medic_kg.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.modelmapper.ModelMapper;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -22,29 +27,6 @@ public class Doctor{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, nullable = false, name = "username")
-    private String username;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(unique = true, nullable = false, name = "avatar")
-    private String avatar;
-
-    @Column(name = "gender")
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    @Column(name = "date_birthday")
-    private Timestamp date_birthday;
-
-    @Column(nullable = false, name = "password")
-    private String password;
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private Roles role;
-
     @Column(name = "inn")
     private String inn;
 
@@ -55,7 +37,7 @@ public class Doctor{
     private String fullInfo;
 
     @Column(name = "short_info")
-    private String short_info;
+    private String shortInfo;
 
     @Column(name = "city")
     private String city;
@@ -80,4 +62,14 @@ public class Doctor{
 
     @Column(name = "is_private_practice")
     private Boolean isPrivatePractice;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_user_id")
+    private User user;
+
+    public DoctorRequest entityToDto(Doctor doctor) {
+        ModelMapper modelMapper = new ModelMapper();
+        DoctorRequest doctorRequest = modelMapper.map(doctor, DoctorRequest.class);
+        return doctorRequest;
+    }
 }

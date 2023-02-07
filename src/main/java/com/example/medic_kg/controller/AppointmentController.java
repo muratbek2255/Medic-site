@@ -2,7 +2,6 @@ package com.example.medic_kg.controller;
 
 
 import com.example.medic_kg.dto.*;
-import com.example.medic_kg.entity.clinic.Clinic;
 import com.example.medic_kg.entity.doctor.Appointment;
 import com.example.medic_kg.service.appointment.impl.AppointmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,7 @@ public class AppointmentController {
 
 
     @PostMapping("/appointment/add")
-    public ResponseEntity<AppointmentResponse> add(@RequestBody AppointmentRequest appointmentRequest) {
+    public ResponseEntity<CreateUpdateDeleteResponse> add(@RequestBody AppointmentRequest appointmentRequest) {
         return appointmentService.add(appointmentRequest);
     }
 

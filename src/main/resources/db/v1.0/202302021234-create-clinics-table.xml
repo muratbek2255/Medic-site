@@ -8,7 +8,7 @@
     <changeSet id="create-clinics-table" author="murat_q">
         <sql>
             CREATE TABLE medic_kg.clinics (
-                                            id serial not null,
+                                            id serial not null PRIMARY KEY ,
                                             fullname varchar(255) not null,
                                             shortname varchar(255) not null,
                                             full_description varchar(500) not null,
@@ -16,7 +16,10 @@
                                             url_site varchar(255) not null,
                                             ownership varchar(255) not null ,
                                             is_draft BOOLEAN default FALSE,
-                                            primary key (id)
+                                            user_id int UNIQUE,
+                                            CONSTRAINT fk_clnics_users
+                                                FOREIGN KEY(user_id)
+                                                    REFERENCES medic_kg.users(id)
             );
         </sql>
     </changeSet>

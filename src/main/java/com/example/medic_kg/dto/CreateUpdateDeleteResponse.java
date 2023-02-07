@@ -6,6 +6,6 @@ import lombok.*;
 @Setter
 @Builder
 @AllArgsConstructor
-public class AppointmentResponse {
+public class CreateUpdateDeleteResponse {
     private String msg;
 }

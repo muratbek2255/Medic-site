@@ -1,6 +1,7 @@
 package com.example.medic_kg.entity.token;
 
 import com.example.medic_kg.entity.patient.Patient;
+import com.example.medic_kg.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,16 +34,16 @@ public class ConfirmationToken {
 
     @ManyToOne
     @JoinColumn(name = "fk_patient_id", nullable = false)
-    private Patient patient;
+    private User user;
 
     public ConfirmationToken(String token,
                              LocalDateTime createdAt,
                              LocalDateTime expiredAt,
-                             Patient patient
+                             User user
     ) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiredAt = expiredAt;
-        this.patient = patient;
+        this.user = user;
     }
 }

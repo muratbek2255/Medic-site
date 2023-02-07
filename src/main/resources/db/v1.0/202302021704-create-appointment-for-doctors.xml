@@ -13,7 +13,7 @@
                                                        approved Boolean not null DEFAULT FALSE,
                                                        patient_id int not null,
                                                        doctor_id int not null,
-                                                        FOREIGN KEY(patient_id)
+                                                       FOREIGN KEY(patient_id)
                                                             REFERENCES medic_kg.patients(id),
 
                                                         FOREIGN KEY(doctor_id)

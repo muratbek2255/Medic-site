@@ -7,7 +7,7 @@
 
     <changeSet id="alter-patient-users-table" author="murat_q">
         <sql>
-            ALTER TABLE medic_kg.patients
+            ALTER TABLE medic_kg.users
             ALTER COLUMN locked TYPE boolean,
             ALTER COLUMN enabled TYPE boolean;
         </sql>

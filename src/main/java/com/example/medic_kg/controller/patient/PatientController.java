@@ -1,9 +1,14 @@
 package com.example.medic_kg.controller.patient;
 
+import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
+import com.example.medic_kg.dto.DoctorRequest;
+import com.example.medic_kg.dto.PatientRequest;
 import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.service.patient.impl.PatientServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,40 +23,28 @@ public class PatientController {
 
 
     @GetMapping("/all/patients")
-    public List<Patient> showAllPatients() {
-        List<Patient> allPatients = patientService.getALl();
-
-        return allPatients;
+    public ResponseEntity<PatientRequest> getAllPatients() {
+        return ResponseEntity.ok((PatientRequest) patientService.getALl());
     }
 
     @GetMapping("/patient/{id}")
-    public Optional<Patient> getPatient(@PathVariable int id) {
-        Optional<Patient> patient = patientService.findById(id);
-
-        if(patient == null) {
-            throw new NoSuchElementException("There is no patient with id: "+ id + " in DB");
-        }
-
-        return patient;
+    public ResponseEntity<PatientRequest> getAllPatients(int id) {
+        return ResponseEntity.ok((PatientRequest) patientService.findById(id));
     }
 
 
-    @PutMapping("/update/patients")
-    public Patient updatePatient(@RequestBody Patient patient) {
-        patientService.update(patient);
+    @PostMapping("/add/patients")
+    public ResponseEntity<CreateUpdateDeleteResponse> addPatient(@RequestBody PatientRequest patientRequest) {
+        return ResponseEntity.ok(patientService.add(patientRequest));
+    }
 
-        return patient;
+    @PutMapping("/update/patients")
+    public ResponseEntity<CreateUpdateDeleteResponse> updatePatient(@RequestBody PatientRequest patientRequest) {
+        return ResponseEntity.ok(patientService.update(patientRequest));
     }
 
     @DeleteMapping("/delete/patient/{id}")
-    public String deletePatient(@PathVariable int id) {
-        Optional<Patient> patient = patientService.findById(id);
-
-        if(patient == null) {
-            throw new NoSuchElementException("There is patient with ID = " + id + " in DataBase");
-        }
-
-        patientService.delete(id);
-        return "Patient with ID = " + id + " was deleted";
+    public ResponseEntity<CreateUpdateDeleteResponse> deletePatient(@PathVariable int id) {
+        return ResponseEntity.ok(patientService.delete(id));
     }
 }

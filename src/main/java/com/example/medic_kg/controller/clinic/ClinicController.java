@@ -1,9 +1,12 @@
 package com.example.medic_kg.controller.clinic;
 
+import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
 import com.example.medic_kg.entity.clinic.Clinic;
 import com.example.medic_kg.service.clinic.impl.ClinicServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,46 +22,28 @@ public class ClinicController {
 
 
     @GetMapping("/all/clinics")
-    public List<Clinic> showAllClinics() {
-        List<Clinic> allClinics = clinicService.getALl();
-
-        return allClinics;
+    public List<ClinicRequest> showAllClinics() {
+        return clinicService.getALl();
     }
 
     @GetMapping("/clinic/{id}")
-    public Optional<Clinic> getClinic(@PathVariable int id) {
-        Optional<Clinic> clinic = clinicService.findById(id);
-
-        if(clinic == null) {
-            throw new NoSuchElementException("There is no clinic with id: "+ id + " in DB");
-        }
-
-        return clinic;
+    public ClinicRequest getClinic(@PathVariable int id) {
+        return clinicService.findById(id);
     }
 
     @PostMapping("/add/clinics")
-    public Clinic addClinic(@RequestBody Clinic clinic) {
-        clinicService.add(clinic);
-
-        return clinic;
+    public ResponseEntity<CreateUpdateDeleteResponse> addClinic(@RequestBody ClinicRequest clinicRequest) {
+        return ResponseEntity.ok(clinicService.add(clinicRequest));
     }
 
     @PutMapping("/update/clinics")
-    public Clinic updateClinic(@RequestBody Clinic clinic) {
-        clinicService.update(clinic);
-
-        return clinic;
+    public ResponseEntity<CreateUpdateDeleteResponse> updateClinic(@RequestBody ClinicRequest clinicRequest) {
+        return ResponseEntity.ok(clinicService.update(clinicRequest));
     }
 
     @DeleteMapping("/delete/clinic/{id}")
-    public String deleteEmployee(@PathVariable int id) {
-        Optional<Clinic> clinic = clinicService.findById(id);
+    public ResponseEntity<CreateUpdateDeleteResponse> deleteEmployee(@PathVariable int id) {
+        return ResponseEntity.ok(clinicService.delete(id));
 
-        if(clinic == null) {
-            throw new NoSuchElementException("There is no clinic with ID = " + id + " in DataBase");
-        }
-
-        clinicService.delete(id);
-        return "Clinic with ID = " + id + " was deleted";
     }
 }

@@ -7,11 +7,4 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
-    Patient findByEmail(String emil);
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE Patient a " +
-            "SET a.enabled = TRUE WHERE a.email = ?1")
-    int enableAppUser(String email);
 }

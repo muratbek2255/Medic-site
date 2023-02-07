@@ -1,5 +1,7 @@
 package com.example.medic_kg.service.clinic;
 
+import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
 import com.example.medic_kg.entity.clinic.Clinic;
 
 import java.util.List;
@@ -7,13 +9,13 @@ import java.util.Optional;
 
 public interface ClinicService {
 
-    public List<Clinic> getALl();
+    public List<ClinicRequest> getALl();
 
-    public Optional<Clinic> findById(int id);
+    public ClinicRequest findById(int id);
 
-    public void add(Clinic clinic);
+    public CreateUpdateDeleteResponse add(ClinicRequest clinicRequest);
 
-    public void update(Clinic clinic);
+    public CreateUpdateDeleteResponse update(ClinicRequest clinic);
 
-    public void delete(int id);
+    public CreateUpdateDeleteResponse delete(int id);
 }

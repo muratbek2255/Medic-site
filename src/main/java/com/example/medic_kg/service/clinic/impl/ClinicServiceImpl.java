@@ -1,6 +1,9 @@
 package com.example.medic_kg.service.clinic.impl;
 
+import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
 import com.example.medic_kg.entity.clinic.Clinic;
+import com.example.medic_kg.entity.clinic.ClinicEntityToDto;
 import com.example.medic_kg.repository.clinics.ClinicRepository;
 import com.example.medic_kg.service.clinic.ClinicService;
 import lombok.AllArgsConstructor;
@@ -17,29 +20,63 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Autowired
     private final ClinicRepository clinicRepository;
+    private final ClinicEntityToDto clinic;
 
     @Override
-    public List<Clinic> getALl() {
-        return clinicRepository.findAll();
+    public List<ClinicRequest> getALl() {
+        List<Clinic> findAll = clinicRepository.findAll();
+        return clinic.entityToDto(findAll);
     }
 
     @Override
-    public Optional<Clinic> findById(int id) {
-        return clinicRepository.findById(id);
+    public ClinicRequest findById(int id) {
+        Clinic clinic1 = clinicRepository.findById(id).orElse(null);
+        return clinic.entityToDto(clinic1);
     }
 
     @Override
-    public void add(Clinic clinic) {
+    public CreateUpdateDeleteResponse add(ClinicRequest clinicRequest) {
+        var clinic = Clinic.builder()
+                .fullName(clinicRequest.getFullName())
+                .shortName(clinicRequest.getShortName())
+                .fullDescription(clinicRequest.getFullDescription())
+                .shortDescription(clinicRequest.getShortDescription())
+                .urlSite(clinicRequest.getUrlSite())
+                .ownerShip(clinicRequest.getOwnerShip())
+                .isDraft(clinicRequest.getIs_draft())
+                .user(clinicRequest.getUser())
+                .build();
+
         clinicRepository.save(clinic);
+
+        return CreateUpdateDeleteResponse.builder()
+                .msg("Clinic created!!!")
+                .build();
     }
 
     @Override
-    public void update(Clinic clinic) {
-        clinicRepository.save(clinic);
+    public CreateUpdateDeleteResponse update(ClinicRequest clinicRequest) {
+        var clinic1 = Clinic.builder()
+                .fullName(clinicRequest.getFullName())
+                .shortName(clinicRequest.getShortName())
+                .fullDescription(clinicRequest.getFullDescription())
+                .shortDescription(clinicRequest.getShortDescription())
+                .urlSite(clinicRequest.getUrlSite())
+                .ownerShip(clinicRequest.getOwnerShip())
+                .isDraft(clinicRequest.getIs_draft())
+                .user(clinicRequest.getUser())
+                .build();
+
+        clinicRepository.save(clinic1);
+
+        return CreateUpdateDeleteResponse.builder()
+                .msg("Clinic updated!!!")
+                .build();
     }
 
     @Override
-    public void delete(int id) {
+    public CreateUpdateDeleteResponse delete(int id) {
         clinicRepository.deleteById(id);
+        return CreateUpdateDeleteResponse.builder().msg("Clinic deleted!!!").build();
     }
 }

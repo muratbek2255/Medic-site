@@ -1,6 +1,9 @@
 package com.example.medic_kg.service.doctor.impl;
 
+import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
+import com.example.medic_kg.dto.DoctorRequest;
 import com.example.medic_kg.entity.doctor.Doctor;
+import com.example.medic_kg.entity.doctor.DoctorEntityToDto;
 import com.example.medic_kg.repository.doctor.DoctorRepository;
 import com.example.medic_kg.service.doctor.DoctorService;
 import lombok.AllArgsConstructor;
@@ -17,29 +20,73 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private final DoctorRepository doctorRepository;
+    private final DoctorEntityToDto entityToDto;
 
     @Override
-    public List<Doctor> getALl() {
-        return doctorRepository.findAll();
+    public List<DoctorRequest> getALl() {
+        List<Doctor> doctor = doctorRepository.findAll();
+        return entityToDto.entityToDto(doctor);
     }
 
     @Override
-    public Optional<Doctor> findById(int id) {
-        return doctorRepository.findById(id);
+    public DoctorRequest findById(int id) {
+        Doctor doctor = doctorRepository.findById(id).orElse(null);
+        return entityToDto.entityToDto(doctor);
     }
 
     @Override
-    public void add(Doctor doctor) {
+    public CreateUpdateDeleteResponse add(DoctorRequest doctorRequest) {
+        var doctor = Doctor.builder()
+                .inn(doctorRequest.getInn())
+                .experience(doctorRequest.getExperience())
+                .fullInfo(doctorRequest.getFullInfo())
+                .shortInfo(doctorRequest.getShortInfo())
+                .city(doctorRequest.getCity())
+                .country(doctorRequest.getCountry())
+                .visitPrice(doctorRequest.getVisitPrice())
+                .homeVisitPrice(doctorRequest.getHomeVisitPrice())
+                .isPediatrist(doctorRequest.getIsPediatrist())
+                .isFamilyDoctor(doctorRequest.getIsFamilyDoctor())
+                .isCertificated(doctorRequest.getIsCertificated())
+                .isPrivatePractice(doctorRequest.getIsPrivatePractice())
+                .user(doctorRequest.getUser())
+                .build();
+
         doctorRepository.save(doctor);
+
+        return CreateUpdateDeleteResponse.builder()
+                .msg("doctor created!!!")
+                .build();
     }
 
     @Override
-    public void update(Doctor doctor) {
-        doctorRepository.save(doctor);
+    public CreateUpdateDeleteResponse update(DoctorRequest doctorRequest) {
+        var doctor2 = Doctor.builder()
+                .inn(doctorRequest.getInn())
+                .experience(doctorRequest.getExperience())
+                .fullInfo(doctorRequest.getFullInfo())
+                .shortInfo(doctorRequest.getShortInfo())
+                .city(doctorRequest.getCity())
+                .country(doctorRequest.getCountry())
+                .visitPrice(doctorRequest.getVisitPrice())
+                .homeVisitPrice(doctorRequest.getHomeVisitPrice())
+                .isPediatrist(doctorRequest.getIsPediatrist())
+                .isFamilyDoctor(doctorRequest.getIsFamilyDoctor())
+                .isCertificated(doctorRequest.getIsCertificated())
+                .isPrivatePractice(doctorRequest.getIsPrivatePractice())
+                .user(doctorRequest.getUser())
+                .build();
+
+        doctorRepository.save(doctor2);
+
+        return CreateUpdateDeleteResponse.builder()
+                .msg("doctor updated!!!")
+                .build();
     }
 
     @Override
-    public void delete(int id) {
+    public CreateUpdateDeleteResponse delete(int id) {
         doctorRepository.deleteById(id);
+        return CreateUpdateDeleteResponse.builder().msg("Clinic deleted!!!").build();
     }
 }
