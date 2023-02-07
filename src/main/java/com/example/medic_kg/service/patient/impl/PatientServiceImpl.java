@@ -15,12 +15,15 @@ import java.util.List;
 
 
 @Service
-@AllArgsConstructor
 public class PatientServiceImpl implements PatientService {
-
-    @Autowired
     private final PatientRepository patientRepository;
     private final PatientEntityToDto patientEntityToDto;
+
+    @Autowired
+    public PatientServiceImpl(PatientRepository patientRepository, PatientEntityToDto patientEntityToDto) {
+        this.patientRepository = patientRepository;
+        this.patientEntityToDto = patientEntityToDto;
+    }
 
     @Override
     public List<PatientRequest> getALl() {

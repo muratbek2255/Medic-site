@@ -15,12 +15,17 @@ import java.util.Optional;
 
 
 @Service
-@AllArgsConstructor
 public class ClinicServiceImpl implements ClinicService {
 
-    @Autowired
     private final ClinicRepository clinicRepository;
     private final ClinicEntityToDto clinic;
+
+
+    @Autowired
+    public ClinicServiceImpl(ClinicRepository clinicRepository, ClinicEntityToDto clinic) {
+        this.clinicRepository = clinicRepository;
+        this.clinic = clinic;
+    }
 
     @Override
     public List<ClinicRequest> getALl() {

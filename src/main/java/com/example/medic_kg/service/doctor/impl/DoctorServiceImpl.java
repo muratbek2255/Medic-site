@@ -15,12 +15,16 @@ import java.util.Optional;
 
 
 @Service
-@AllArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
 
-    @Autowired
     private final DoctorRepository doctorRepository;
     private final DoctorEntityToDto entityToDto;
+
+    @Autowired
+    public DoctorServiceImpl(DoctorRepository doctorRepository, DoctorEntityToDto entityToDto) {
+        this.doctorRepository = doctorRepository;
+        this.entityToDto = entityToDto;
+    }
 
     @Override
     public List<DoctorRequest> getALl() {

@@ -18,7 +18,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-    private static final String[] AUTH_WHITELIST = {
+    private static final String[] PERMIT_ALL_WHITELIST = {
             "/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
@@ -26,7 +26,15 @@ public class SecurityConfig {
             "/auth/register",
             "/auth/authenticate",
             "/appointment/add",
-            "/auth/register/confirm**"
+            "/auth/register/confirm**",
+    };
+
+    private static final String[] AUTHENTICATED_WHITELIST = {
+            "/appointment/add",
+            "/all/clinics",
+            "/clinic/{id}",
+            "/all/doctors",
+            "/doctor/{id}",
     };
     private final AuthenticationProvider authenticationProvider;
 
@@ -37,10 +45,12 @@ public class SecurityConfig {
                 .disable()
                 .httpBasic().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(AUTH_WHITELIST)
+                .requestMatchers(PERMIT_ALL_WHITELIST)
                 .permitAll()
-                .anyRequest()
+                .requestMatchers(AUTHENTICATED_WHITELIST)
                 .authenticated()
+                .anyRequest()
+                .hasRole("ROLE_ADMIN")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

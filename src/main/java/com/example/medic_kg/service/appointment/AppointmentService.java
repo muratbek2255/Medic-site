@@ -10,13 +10,13 @@ import java.util.Optional;
 
 public interface AppointmentService {
 
-    public List<Appointment> getAll();
+    public List<AppointmentRequest> getAll();
 
-    public Optional<Appointment> findById(int id);
+    public AppointmentRequest findById(int id);
 
-    public ResponseEntity<CreateUpdateDeleteResponse> add(AppointmentRequest appointmentRequest);
+    public CreateUpdateDeleteResponse add(AppointmentRequest appointmentRequest);
 
-    public void update(Appointment appointment);
+    public CreateUpdateDeleteResponse update(AppointmentRequest appointmentRequest);
 
-    public void delete(int id);
+    public CreateUpdateDeleteResponse delete(int id);
 }

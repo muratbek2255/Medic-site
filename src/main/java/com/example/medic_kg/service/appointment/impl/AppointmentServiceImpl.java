@@ -3,6 +3,7 @@ package com.example.medic_kg.service.appointment.impl;
 import com.example.medic_kg.dto.AppointmentRequest;
 import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
 import com.example.medic_kg.entity.doctor.Appointment;
+import com.example.medic_kg.entity.doctor.AppointmentEntityToDto;
 import com.example.medic_kg.repository.doctor.AppointmentRepository;
 import com.example.medic_kg.repository.doctor.DoctorRepository;
 import com.example.medic_kg.repository.patient.PatientRepository;
@@ -21,28 +22,30 @@ public class AppointmentServiceImpl implements AppointmentService {
     private AppointmentRepository appointmentRepository;
     private DoctorRepository doctorRepository;
     private PatientRepository userRepository;
-
-    private Appointment appointment;
+    private AppointmentEntityToDto appointmentEntityToDto;
 
     @Autowired
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository, PatientRepository userRepository) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DoctorRepository doctorRepository, PatientRepository userRepository, AppointmentEntityToDto appointmentEntityToDto, Appointment appointment) {
         this.appointmentRepository = appointmentRepository;
         this.doctorRepository = doctorRepository;
         this.userRepository = userRepository;
+        this.appointmentEntityToDto = appointmentEntityToDto;
     }
 
     @Override
-    public List<Appointment> getAll() {
-        return appointmentRepository.findAll();
+    public List<AppointmentRequest> getAll() {
+        List<Appointment> appointments = appointmentRepository.findAll();
+        return appointmentEntityToDto.entityToDto(appointments);
     }
 
     @Override
-    public Optional<Appointment> findById(int id) {
-        return appointmentRepository.findById(id);
+    public AppointmentRequest findById(int id) {
+        Appointment appointment1 = appointmentRepository.findById(id).orElse(null);
+        return appointmentEntityToDto.entityToDto(appointment1);
     }
 
     @Override
-    public ResponseEntity<CreateUpdateDeleteResponse> add(AppointmentRequest appointmentRequest) {
+    public CreateUpdateDeleteResponse add(AppointmentRequest appointmentRequest) {
         var appointment = Appointment.builder()
                 .date(appointmentRequest.getDate())
                 .approved(Boolean.TRUE)
@@ -53,19 +56,37 @@ public class AppointmentServiceImpl implements AppointmentService {
         System.out.println(appointmentRequest);
         appointmentRepository.save(appointment);
 
-        return ResponseEntity.ok(CreateUpdateDeleteResponse
+        return CreateUpdateDeleteResponse
                 .builder()
                 .msg("Appointment created!!!")
-                .build());
+                .build();
     }
 
     @Override
-    public void update(Appointment appointment) {
+    public CreateUpdateDeleteResponse update(AppointmentRequest appointmentRequest) {
+        var appointment = Appointment.builder()
+                .date(appointmentRequest.getDate())
+                .approved(appointmentRequest.getApproved())
+                .patient(appointmentRequest.getPUser())
+                .doctor(appointmentRequest.getDUser())
+                .build();
+
+        System.out.println(appointmentRequest);
         appointmentRepository.save(appointment);
+
+        return CreateUpdateDeleteResponse
+                .builder()
+                .msg("Appointment updated!!!")
+                .build();
     }
 
     @Override
-    public void delete(int id) {
+    public CreateUpdateDeleteResponse delete(int id) {
         appointmentRepository.deleteById(id);
+
+        return CreateUpdateDeleteResponse
+                .builder()
+                .msg("Appointment deleted!!!")
+                .build();
     }
 }
