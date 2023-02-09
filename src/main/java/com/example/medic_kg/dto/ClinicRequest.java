@@ -22,5 +22,5 @@ public class ClinicRequest {
     private String urlSite;
     private String ownerShip;
     private Boolean is_draft;
-    private User user;
+    private UserRequest user;
 }

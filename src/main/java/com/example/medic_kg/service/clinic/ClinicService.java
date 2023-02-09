@@ -1,21 +1,19 @@
 package com.example.medic_kg.service.clinic;
 
 import com.example.medic_kg.dto.ClinicRequest;
-import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
-import com.example.medic_kg.entity.clinic.Clinic;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ClinicService {
 
-    public List<ClinicRequest> getALl();
+    public ResponseEntity<String> getALl();
 
-    public ClinicRequest findById(int id);
+    public ResponseEntity<String> findById(int id);
 
-    public CreateUpdateDeleteResponse add(ClinicRequest clinicRequest);
+    public ResponseEntity<String> add(ClinicRequest clinicRequest);
 
-    public CreateUpdateDeleteResponse update(ClinicRequest clinic);
+    public ResponseEntity<String> update(ClinicRequest clinic);
 
-    public CreateUpdateDeleteResponse delete(int id);
+    public ResponseEntity<String> delete(int id);
 }

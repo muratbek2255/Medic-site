@@ -16,7 +16,7 @@
                                             url_site varchar(255) not null,
                                             ownership varchar(255) not null ,
                                             is_draft BOOLEAN default FALSE,
-                                            user_id int UNIQUE,
+                                            user_id int UNIQUE not null,
                                             CONSTRAINT fk_clnics_users
                                                 FOREIGN KEY(user_id)
                                                     REFERENCES medic_kg.users(id)

@@ -1,17 +1,20 @@
 package com.example.medic_kg.service.patient.impl;
 
-import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
-import com.example.medic_kg.dto.DoctorRequest;
 import com.example.medic_kg.dto.PatientRequest;
 import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.entity.patient.PatientEntityToDto;
+import com.example.medic_kg.entity.user.User;
 import com.example.medic_kg.repository.patient.PatientRepository;
+import com.example.medic_kg.repository.user.UserRepository;
 import com.example.medic_kg.service.patient.PatientService;
-import lombok.AllArgsConstructor;
+import com.example.medic_kg.service.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -19,62 +22,66 @@ public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
     private final PatientEntityToDto patientEntityToDto;
 
+    private final UserRepository userRepository;
+    private final UserService userService;
+
     @Autowired
-    public PatientServiceImpl(PatientRepository patientRepository, PatientEntityToDto patientEntityToDto) {
+    public PatientServiceImpl(PatientRepository patientRepository, PatientEntityToDto patientEntityToDto, UserRepository userRepository, UserService userService) {
         this.patientRepository = patientRepository;
         this.patientEntityToDto = patientEntityToDto;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
-    public List<PatientRequest> getALl() {
+    public ResponseEntity<String> getALl() {
         List<Patient> patients = patientRepository.findAll();
-        return patientEntityToDto.entityToDto(patients);
+        patientEntityToDto.entityToDto(patients);
+
+        return ResponseEntity.status(200).body("All patients!");
     }
 
     @Override
-    public PatientRequest findById(int id) {
+    public ResponseEntity<String> findById(int id) {
         Patient patient = patientRepository.findById(id).orElse(null);
-        return patientEntityToDto.entityToDto(patient);
+        patientEntityToDto.entityToDto(patient);
+
+        return ResponseEntity.status(200).body("Get by id");
     }
 
     @Override
-    public CreateUpdateDeleteResponse add(PatientRequest patientRequest) {
+    public ResponseEntity<String> add(PatientRequest patientRequest) {
+        Patient patient = new Patient();
+        User user = userRepository.findById((int)patientRequest.getUser().getId());
+        patient.setBloodType(patientRequest.getBloodType());
+        patient.setInfo(patientRequest.getInfo());
+        patient.setAddress(patientRequest.getAddress());
+        patient.setUser(user);
+
+        patientRepository.save(patient);
+
+        return ResponseEntity.status(201).body("Created patient");
+    }
+
+    @Override
+    public ResponseEntity<String> update(PatientRequest patientRequest, User user) {
         var patient = Patient.builder()
                 .bloodType(patientRequest.getBloodType())
                 .info(patientRequest.getInfo())
                 .address(patientRequest.getAddress())
-                .user(patientRequest.getUser())
+                .user(user)
                 .build();
+
 
         patientRepository.save(patient);
 
-        return CreateUpdateDeleteResponse.builder()
-                .msg("Patient created!!!")
-                .build();
+        return ResponseEntity.status(201).body("Updated patient");
     }
 
     @Override
-    public CreateUpdateDeleteResponse update(PatientRequest patientRequest) {
-        var patient = Patient.builder()
-                .bloodType(patientRequest.getBloodType())
-                .info(patientRequest.getInfo())
-                .address(patientRequest.getAddress())
-                .user(patientRequest.getUser())
-                .build();
-
-        patientRepository.save(patient);
-
-        return CreateUpdateDeleteResponse.builder()
-                .msg("Patient updated!!!")
-                .build();
-    }
-
-    @Override
-    public CreateUpdateDeleteResponse delete(int id) {
+    public ResponseEntity<String> delete(int id) {
         patientRepository.deleteById(id);
 
-        return CreateUpdateDeleteResponse.builder()
-                .msg("Patient deleted!!!")
-                .build();
+        return ResponseEntity.status(202).body("Deleted patient");
     }
 }

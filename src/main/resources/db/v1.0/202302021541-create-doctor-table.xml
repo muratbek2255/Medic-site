@@ -21,7 +21,7 @@
                                               is_family_doctor BOOLEAN default FALSE,
                                               is_certificated BOOLEAN default FALSE,
                                               is_private_practice BOOLEAN default FALSE,
-                                              fk_user_id int UNIQUE,
+                                              fk_user_id int UNIQUE not null,
                                               CONSTRAINT fk_doctor_users
                                                   FOREIGN KEY(fk_user_id)
                                                       REFERENCES medic_kg.users(id)

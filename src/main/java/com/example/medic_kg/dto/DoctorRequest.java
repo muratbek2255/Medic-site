@@ -1,6 +1,7 @@
 package com.example.medic_kg.dto;
 
 
+import com.example.medic_kg.entity.doctor.Doctor;
 import com.example.medic_kg.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class DoctorRequest {
+public class DoctorRequest extends Doctor {
     private String inn;
     private String experience;
     private String fullInfo;
@@ -27,5 +28,5 @@ public class DoctorRequest {
     private Boolean isFamilyDoctor;
     private Boolean isCertificated;
     private Boolean isPrivatePractice;
-    private User user;
+    private UserRequest user;
 }

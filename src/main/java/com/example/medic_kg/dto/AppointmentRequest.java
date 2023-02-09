@@ -15,6 +15,6 @@ public class AppointmentRequest {
     private String date;
 
     private Boolean approved;
-    private Patient pUser;
-    private Doctor dUser;
+    private PatientRequest pUser;
+    private DoctorRequest dUser;
 }

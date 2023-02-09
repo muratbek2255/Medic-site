@@ -12,7 +12,7 @@
                                                blood_type int,
                                                info varchar(255) not null,
                                                address varchar(255) not null,
-                                               fk_user_fk_id int UNIQUE,
+                                               fk_user_fk_id int UNIQUE not null ,
                                                CONSTRAINT fk_doctor_users
                                                    FOREIGN KEY(fk_user_fk_id)
                                                        REFERENCES medic_kg.users(id)

@@ -1,17 +1,16 @@
 package com.example.medic_kg.service.doctor.impl;
 
-import com.example.medic_kg.dto.CreateUpdateDeleteResponse;
 import com.example.medic_kg.dto.DoctorRequest;
 import com.example.medic_kg.entity.doctor.Doctor;
 import com.example.medic_kg.entity.doctor.DoctorEntityToDto;
 import com.example.medic_kg.repository.doctor.DoctorRepository;
 import com.example.medic_kg.service.doctor.DoctorService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.ResourceBundle;
 
 
 @Service
@@ -27,19 +26,23 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<DoctorRequest> getALl() {
+    public ResponseEntity<String> getALl() {
         List<Doctor> doctor = doctorRepository.findAll();
-        return entityToDto.entityToDto(doctor);
+        entityToDto.entityToDto(doctor);
+
+        return ResponseEntity.status(200).body("All doctors");
     }
 
     @Override
-    public DoctorRequest findById(int id) {
+    public ResponseEntity<String> findById(int id) {
         Doctor doctor = doctorRepository.findById(id).orElse(null);
-        return entityToDto.entityToDto(doctor);
+        entityToDto.entityToDto(doctor);
+
+        return ResponseEntity.status(200).body("Get by id doctor");
     }
 
     @Override
-    public CreateUpdateDeleteResponse add(DoctorRequest doctorRequest) {
+    public ResponseEntity<String> add(DoctorRequest doctorRequest) {
         var doctor = Doctor.builder()
                 .inn(doctorRequest.getInn())
                 .experience(doctorRequest.getExperience())
@@ -58,13 +61,11 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctorRepository.save(doctor);
 
-        return CreateUpdateDeleteResponse.builder()
-                .msg("doctor created!!!")
-                .build();
+        return ResponseEntity.status(201).body("Doctor created");
     }
 
     @Override
-    public CreateUpdateDeleteResponse update(DoctorRequest doctorRequest) {
+    public ResponseEntity<String> update(DoctorRequest doctorRequest) {
         var doctor2 = Doctor.builder()
                 .inn(doctorRequest.getInn())
                 .experience(doctorRequest.getExperience())
@@ -83,14 +84,12 @@ public class DoctorServiceImpl implements DoctorService {
 
         doctorRepository.save(doctor2);
 
-        return CreateUpdateDeleteResponse.builder()
-                .msg("doctor updated!!!")
-                .build();
+        return ResponseEntity.status(201).body("Doctor created");
     }
 
     @Override
-    public CreateUpdateDeleteResponse delete(int id) {
+    public ResponseEntity<String> delete(int id) {
         doctorRepository.deleteById(id);
-        return CreateUpdateDeleteResponse.builder().msg("Clinic deleted!!!").build();
+        return ResponseEntity.status(202).body("Doctor deleted");
     }
 }

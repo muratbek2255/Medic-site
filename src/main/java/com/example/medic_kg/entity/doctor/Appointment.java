@@ -4,8 +4,10 @@ import com.example.medic_kg.entity.enums.doctor.AppointmentEnum;
 import com.example.medic_kg.entity.patient.Patient;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 @Entity
+@Component
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter

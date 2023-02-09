@@ -67,9 +67,4 @@ public class Doctor{
     @JoinColumn(name = "fk_user_id")
     private User user;
 
-    public DoctorRequest entityToDto(Doctor doctor) {
-        ModelMapper modelMapper = new ModelMapper();
-        DoctorRequest doctorRequest = modelMapper.map(doctor, DoctorRequest.class);
-        return doctorRequest;
-    }
 }

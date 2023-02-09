@@ -1,6 +1,7 @@
 package com.example.medic_kg.entity.user;
 
 import com.example.medic_kg.entity.enums.user.Gender;
+import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.entity.roles.Roles;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,8 +51,18 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private Roles role;
 
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user")
+//    private List<Patient> patients;
+
     private Boolean locked = false;
     private Boolean enabled = false;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    private Patient patient;
+
+    public User(int id, String username, String email, String avatar, String male, String s, String password, String rolePatient, boolean locked, boolean enabled) {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
