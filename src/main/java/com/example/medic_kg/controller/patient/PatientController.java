@@ -1,6 +1,6 @@
 package com.example.medic_kg.controller.patient;
 
-import com.example.medic_kg.dto.PatientRequest;
+import com.example.medic_kg.dto.requests.PatientRequest;
 import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.repository.user.UserRepository;
 import com.example.medic_kg.service.patient.impl.PatientServiceImpl;

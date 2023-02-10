@@ -1,20 +1,20 @@
-package com.example.medic_kg.dto;
+package com.example.medic_kg.dto.requests;
 
-import com.example.medic_kg.entity.doctor.Doctor;
 import com.example.medic_kg.entity.enums.doctor.AppointmentEnum;
-import com.example.medic_kg.entity.patient.Patient;
 import lombok.*;
 
-import javax.print.Doc;
+import java.sql.Date;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 public class AppointmentRequest {
-    private String date;
+    private Date starttime;
 
-    private Boolean approved;
+    private Date endtime;
+    private AppointmentEnum approved;
     private PatientRequest pUser;
     private DoctorRequest dUser;
+    private AppointmentDetailRequest appointmentDetailRequest;
 }

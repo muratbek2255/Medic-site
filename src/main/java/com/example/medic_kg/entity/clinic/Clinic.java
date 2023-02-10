@@ -1,11 +1,9 @@
 package com.example.medic_kg.entity.clinic;
 
 
-import com.example.medic_kg.dto.ClinicRequest;
 import com.example.medic_kg.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.modelmapper.ModelMapper;
 
 import java.util.List;
 

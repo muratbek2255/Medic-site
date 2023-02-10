@@ -1,4 +1,4 @@
-package com.example.medic_kg.dto;
+package com.example.medic_kg.dto.requests;
 
 import com.example.medic_kg.entity.enums.user.Gender;
 import com.example.medic_kg.entity.roles.Roles;

@@ -1,8 +1,8 @@
 package com.example.medic_kg.service;
 
-import com.example.medic_kg.dto.AuthenticationRequest;
-import com.example.medic_kg.dto.AuthenticationResponse;
-import com.example.medic_kg.dto.RegisterRequest;
+import com.example.medic_kg.dto.requests.AuthenticationRequest;
+import com.example.medic_kg.dto.response.AuthenticationResponse;
+import com.example.medic_kg.dto.requests.RegisterRequest;
 import com.example.medic_kg.email.EmailSender;
 import com.example.medic_kg.entity.enums.user.Gender;
 import com.example.medic_kg.entity.roles.Roles;
@@ -17,7 +17,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,8 @@
 package com.example.medic_kg.service.clinic.impl;
 
-import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.requests.ClinicRequest;
 import com.example.medic_kg.entity.clinic.Clinic;
 import com.example.medic_kg.entity.clinic.ClinicEntityToDto;
-import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.entity.user.User;
 import com.example.medic_kg.repository.clinics.ClinicRepository;
 import com.example.medic_kg.service.clinic.ClinicService;

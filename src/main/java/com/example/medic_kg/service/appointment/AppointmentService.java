@@ -1,9 +1,7 @@
 package com.example.medic_kg.service.appointment;
 
-import com.example.medic_kg.dto.AppointmentRequest;
+import com.example.medic_kg.dto.requests.AppointmentRequest;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface AppointmentService {
 

@@ -1,22 +1,18 @@
 package com.example.medic_kg.service.patient.impl;
 
-import com.example.medic_kg.dto.PatientRequest;
-import com.example.medic_kg.entity.doctor.Doctor;
+import com.example.medic_kg.dto.requests.PatientRequest;
 import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.entity.patient.PatientEntityToDto;
 import com.example.medic_kg.entity.user.User;
-import com.example.medic_kg.exception_handling.NoSuchUnknownException;
 import com.example.medic_kg.repository.patient.PatientRepository;
 import com.example.medic_kg.repository.user.UserRepository;
 import com.example.medic_kg.service.patient.PatientService;
 import com.example.medic_kg.service.user.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

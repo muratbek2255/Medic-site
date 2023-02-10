@@ -1,6 +1,6 @@
 package com.example.medic_kg.service.doctor.impl;
 
-import com.example.medic_kg.dto.DoctorRequest;
+import com.example.medic_kg.dto.requests.DoctorRequest;
 import com.example.medic_kg.entity.doctor.Doctor;
 import com.example.medic_kg.entity.doctor.DoctorEntityToDto;
 import com.example.medic_kg.entity.user.User;

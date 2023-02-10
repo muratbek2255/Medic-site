@@ -1,6 +1,6 @@
 package com.example.medic_kg.service.doctor;
 
-import com.example.medic_kg.dto.DoctorRequest;
+import com.example.medic_kg.dto.requests.DoctorRequest;
 import com.example.medic_kg.entity.doctor.Doctor;
 import org.springframework.http.ResponseEntity;
 

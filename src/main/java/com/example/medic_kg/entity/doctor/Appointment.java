@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+
 @Entity
 @Component
 @RequiredArgsConstructor
@@ -20,11 +22,18 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "date")
-    private String date;
+    @Column(name="starttime")
+    private Date starttime;
 
-    @Column(name = "approved")
-    private Boolean approved;
+    @Column(name="endtime")
+    private Date endtime;
+
+    @Column(name="status")
+    private AppointmentEnum status;
+
+    @OneToOne
+    @JoinColumn(name="appointmentdetail_id")
+    private AppointmentDetail appointmentdetail;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id")

@@ -9,13 +9,16 @@
         <sql>
             CREATE TABLE medic_kg.appointments_doctor (
                                                        id serial PRIMARY KEY not null,
-                                                       date varchar(255) not null,
-                                                       approved Boolean not null DEFAULT FALSE,
+                                                       starttime date,
+                                                       endtime date,
+                                                       status int not null,
+                                                       appointmentdetail_id int UNIQUE,
                                                        patient_id int not null,
                                                        doctor_id int not null,
+                                                       FOREIGN KEY (appointmentdetail_id)
+                                                           REFERENCES medic_kg.appointments_details(id),
                                                        FOREIGN KEY(patient_id)
                                                             REFERENCES medic_kg.patients(id),
-
                                                         FOREIGN KEY(doctor_id)
                                                             REFERENCES medic_kg.doctors(id)
             );

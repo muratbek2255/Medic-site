@@ -51,10 +51,6 @@ public class User implements UserDetails {
     @JoinColumn(name = "role_id")
     private Roles role;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user")
-//    private List<Patient> patients;
-
     private Boolean locked = false;
     private Boolean enabled = false;
 

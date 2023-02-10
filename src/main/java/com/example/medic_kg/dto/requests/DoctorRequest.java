@@ -1,8 +1,6 @@
-package com.example.medic_kg.dto;
+package com.example.medic_kg.dto.requests;
 
 
-import com.example.medic_kg.entity.doctor.Doctor;
-import com.example.medic_kg.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

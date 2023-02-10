@@ -1,6 +1,6 @@
 package com.example.medic_kg.entity.clinic;
 
-import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.requests.ClinicRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

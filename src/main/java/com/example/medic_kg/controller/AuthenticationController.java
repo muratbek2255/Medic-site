@@ -1,9 +1,9 @@
 package com.example.medic_kg.controller;
 
 
-import com.example.medic_kg.dto.AuthenticationRequest;
-import com.example.medic_kg.dto.AuthenticationResponse;
-import com.example.medic_kg.dto.RegisterRequest;
+import com.example.medic_kg.dto.requests.AuthenticationRequest;
+import com.example.medic_kg.dto.response.AuthenticationResponse;
+import com.example.medic_kg.dto.requests.RegisterRequest;
 import com.example.medic_kg.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

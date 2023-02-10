@@ -1,4 +1,4 @@
-package com.example.medic_kg.dto;
+package com.example.medic_kg.dto.response;
 
 import lombok.*;
 

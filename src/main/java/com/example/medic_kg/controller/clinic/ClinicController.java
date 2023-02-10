@@ -1,13 +1,11 @@
 package com.example.medic_kg.controller.clinic;
 
-import com.example.medic_kg.dto.ClinicRequest;
+import com.example.medic_kg.dto.requests.ClinicRequest;
 import com.example.medic_kg.service.clinic.impl.ClinicServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

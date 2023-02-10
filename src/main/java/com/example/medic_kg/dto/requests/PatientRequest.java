@@ -1,10 +1,10 @@
-package com.example.medic_kg.dto;
+package com.example.medic_kg.dto.requests;
 
 
-import com.example.medic_kg.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -13,14 +13,12 @@ import org.springframework.stereotype.Component;
 @Setter
 @AllArgsConstructor
 @Component
+@ToString
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ClinicRequest {
-    private String fullName;
-    private String shortName;
-    private String fullDescription;
-    private String shortDescription;
-    private String urlSite;
-    private String ownerShip;
-    private Boolean is_draft;
+public class PatientRequest{
+    private Integer id;
+    private Integer bloodType;
+    private String info;
+    private String address;
     private UserRequest user;
 }

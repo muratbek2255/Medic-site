@@ -1,17 +1,8 @@
 package com.example.medic_kg.entity.doctor;
 
-import com.example.medic_kg.dto.ClinicRequest;
-import com.example.medic_kg.dto.DoctorRequest;
-import com.example.medic_kg.entity.clinic.Clinic;
-import com.example.medic_kg.entity.enums.user.Gender;
-import com.example.medic_kg.entity.roles.Roles;
 import com.example.medic_kg.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-import org.modelmapper.ModelMapper;
-
-import java.sql.Timestamp;
-import java.util.List;
 
 
 @Entity

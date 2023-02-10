@@ -1,7 +1,6 @@
 package com.example.medic_kg.entity.doctor;
 
-import com.example.medic_kg.dto.AppointmentRequest;
-import com.example.medic_kg.dto.DoctorRequest;
+import com.example.medic_kg.dto.requests.AppointmentRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
