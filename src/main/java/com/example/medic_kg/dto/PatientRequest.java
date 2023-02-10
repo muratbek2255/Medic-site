@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 @ToString
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PatientRequest{
+    private Integer id;
     private Integer bloodType;
     private String info;
     private String address;

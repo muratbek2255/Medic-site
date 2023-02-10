@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class DoctorRequest extends Doctor {
+public class DoctorRequest{
+    private Integer id;
     private String inn;
     private String experience;
     private String fullInfo;

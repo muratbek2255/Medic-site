@@ -18,7 +18,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class UserRequest extends User {
+public class UserRequest{
+    private Integer id;
     private String username;
     private String email;
     private String avatar;

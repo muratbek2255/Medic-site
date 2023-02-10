@@ -1,15 +1,14 @@
 package com.example.medic_kg.service.doctor;
 
 import com.example.medic_kg.dto.DoctorRequest;
+import com.example.medic_kg.entity.doctor.Doctor;
 import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface DoctorService {
 
     public ResponseEntity<String> getALl();
 
-    public ResponseEntity<String> findById(int id);
+    public Doctor getById(int id);
 
     public ResponseEntity<String> add(DoctorRequest doctorRequest);
 

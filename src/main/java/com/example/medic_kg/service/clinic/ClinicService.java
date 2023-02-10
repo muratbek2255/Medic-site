@@ -9,7 +9,7 @@ public interface ClinicService {
 
     public ResponseEntity<String> getALl();
 
-    public ResponseEntity<String> findById(int id);
+    public ResponseEntity<String> getById(int id);
 
     public ResponseEntity<String> add(ClinicRequest clinicRequest);
 

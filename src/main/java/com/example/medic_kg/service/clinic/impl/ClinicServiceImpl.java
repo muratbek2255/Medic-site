@@ -1,18 +1,19 @@
 package com.example.medic_kg.service.clinic.impl;
 
 import com.example.medic_kg.dto.ClinicRequest;
-import com.example.medic_kg.dto.UserRequest;
 import com.example.medic_kg.entity.clinic.Clinic;
 import com.example.medic_kg.entity.clinic.ClinicEntityToDto;
+import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.entity.user.User;
 import com.example.medic_kg.repository.clinics.ClinicRepository;
 import com.example.medic_kg.service.clinic.ClinicService;
-import lombok.AllArgsConstructor;
+import com.example.medic_kg.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -23,10 +24,11 @@ public class ClinicServiceImpl implements ClinicService {
 
     private ClinicEntityToDto clinic;
 
-    private User user;
+    private final UserService userService;
 
-    public ClinicServiceImpl(ClinicRepository clinicRepository) {
+    public ClinicServiceImpl(ClinicRepository clinicRepository, UserService userService) {
         this.clinicRepository = clinicRepository;
+        this.userService = userService;
     }
 
 
@@ -39,8 +41,8 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
-    public ResponseEntity<String> findById(int id) {
-        Clinic clinic1 = clinicRepository.findById(id).orElse(null);
+    public ResponseEntity<String> getById(int id) {
+        Optional<Clinic> clinic1 = clinicRepository.findById(id);
         clinic.entityToDto(clinic1);
 
         return ResponseEntity.status(200).body("Clinic by id");
@@ -48,38 +50,38 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public ResponseEntity<String> add(ClinicRequest clinicRequest) {
-        var clinic = Clinic.builder()
-                .fullName(clinicRequest.getFullName())
-                .shortName(clinicRequest.getShortName())
-                .fullDescription(clinicRequest.getFullDescription())
-                .shortDescription(clinicRequest.getShortDescription())
-                .urlSite(clinicRequest.getUrlSite())
-                .ownerShip(clinicRequest.getOwnerShip())
-                .isDraft(clinicRequest.getIs_draft())
-                .user(user)
-                .build();
+        Clinic clinic1 = new Clinic();
+        User user = userService.getById(clinicRequest.getUser().getId());
+        clinic1.setFullName(clinicRequest.getFullName());
+        clinic1.setShortName(clinicRequest.getShortName());
+        clinic1.setFullDescription(clinicRequest.getFullDescription());
+        clinic1.setShortDescription(clinicRequest.getShortDescription());
+        clinic1.setUrlSite(clinicRequest.getUrlSite());
+        clinic1.setOwnerShip(clinicRequest.getOwnerShip());
+        clinic1.setIsDraft(clinicRequest.getIs_draft());
+        clinic1.setUser(user);
 
-        clinicRepository.save(clinic);
+        clinicRepository.save(clinic1);
 
-        return ResponseEntity.status(201).body(String.format("Created!!!"));
+        return ResponseEntity.status(201).body(String.format("Clinic Created!!!"));
     }
 
     @Override
     public ResponseEntity<String> update(ClinicRequest clinicRequest) {
-        var clinic1 = Clinic.builder()
-                .fullName(clinicRequest.getFullName())
-                .shortName(clinicRequest.getShortName())
-                .fullDescription(clinicRequest.getFullDescription())
-                .shortDescription(clinicRequest.getShortDescription())
-                .urlSite(clinicRequest.getUrlSite())
-                .ownerShip(clinicRequest.getOwnerShip())
-                .isDraft(clinicRequest.getIs_draft())
-                .user(clinicRequest.getUser())
-                .build();
+        Clinic clinic1 = new Clinic();
+        User user = userService.getById(clinicRequest.getUser().getId());
+        clinic1.setFullName(clinicRequest.getFullName());
+        clinic1.setShortName(clinicRequest.getShortName());
+        clinic1.setFullDescription(clinicRequest.getFullDescription());
+        clinic1.setShortDescription(clinicRequest.getShortDescription());
+        clinic1.setUrlSite(clinicRequest.getUrlSite());
+        clinic1.setOwnerShip(clinicRequest.getOwnerShip());
+        clinic1.setIsDraft(clinicRequest.getIs_draft());
+        clinic1.setUser(user);
 
         clinicRepository.save(clinic1);
 
-        return ResponseEntity.status(201).body(String.format("Updated!!!"));
+        return ResponseEntity.status(201).body(String.format("Clinic Created!!!"));
     }
 
     @Override

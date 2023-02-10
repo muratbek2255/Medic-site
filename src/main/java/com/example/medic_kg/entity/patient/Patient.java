@@ -29,6 +29,6 @@ public class Patient{
     private String address;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_user_fk_id")
+    @JoinColumn(name = "fk_user_fk_id", referencedColumnName = "id")
     private User user;
 }

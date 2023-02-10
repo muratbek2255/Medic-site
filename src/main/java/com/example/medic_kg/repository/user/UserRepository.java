@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmail(String email);
 
-    User findById(int id);
-
     @Transactional
     @Modifying
     @Query("UPDATE User a " +

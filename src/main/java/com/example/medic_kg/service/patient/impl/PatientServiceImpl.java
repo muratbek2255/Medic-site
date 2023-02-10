@@ -1,9 +1,11 @@
 package com.example.medic_kg.service.patient.impl;
 
 import com.example.medic_kg.dto.PatientRequest;
+import com.example.medic_kg.entity.doctor.Doctor;
 import com.example.medic_kg.entity.patient.Patient;
 import com.example.medic_kg.entity.patient.PatientEntityToDto;
 import com.example.medic_kg.entity.user.User;
+import com.example.medic_kg.exception_handling.NoSuchUnknownException;
 import com.example.medic_kg.repository.patient.PatientRepository;
 import com.example.medic_kg.repository.user.UserRepository;
 import com.example.medic_kg.service.patient.PatientService;
@@ -42,17 +44,15 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public ResponseEntity<String> findById(int id) {
-        Patient patient = patientRepository.findById(id).orElse(null);
-        patientEntityToDto.entityToDto(patient);
-
-        return ResponseEntity.status(200).body("Get by id");
+    public Patient getById(int id) {
+        Patient patient= patientRepository.getById(id);
+        return patient;
     }
 
     @Override
     public ResponseEntity<String> add(PatientRequest patientRequest) {
         Patient patient = new Patient();
-        User user = userRepository.findById((int)patientRequest.getUser().getId());
+        User user = userService.getById(patientRequest.getUser().getId());
         patient.setBloodType(patientRequest.getBloodType());
         patient.setInfo(patientRequest.getInfo());
         patient.setAddress(patientRequest.getAddress());
@@ -64,18 +64,17 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public ResponseEntity<String> update(PatientRequest patientRequest, User user) {
-        var patient = Patient.builder()
-                .bloodType(patientRequest.getBloodType())
-                .info(patientRequest.getInfo())
-                .address(patientRequest.getAddress())
-                .user(user)
-                .build();
-
+    public ResponseEntity<String> update(PatientRequest patientRequest) {
+        Patient patient = new Patient();
+        User user = userService.getById(patientRequest.getUser().getId());
+        patient.setBloodType(patientRequest.getBloodType());
+        patient.setInfo(patientRequest.getInfo());
+        patient.setAddress(patientRequest.getAddress());
+        patient.setUser(user);
 
         patientRepository.save(patient);
 
-        return ResponseEntity.status(201).body("Updated patient");
+        return ResponseEntity.status(201).body("Created patient");
     }
 
     @Override

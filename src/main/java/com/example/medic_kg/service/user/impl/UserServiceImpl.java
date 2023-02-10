@@ -1,6 +1,7 @@
 package com.example.medic_kg.service.user.impl;
 
 import com.example.medic_kg.entity.user.User;
+import com.example.medic_kg.exception_handling.NoSuchUnknownException;
 import com.example.medic_kg.repository.user.UserRepository;
 import com.example.medic_kg.service.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(int id) {
-        User user = userRepository.findById(id);
+    public User getById(int id) {
+        User user = userRepository.getById(id);
         return user;
     }
 }

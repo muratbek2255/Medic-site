@@ -5,12 +5,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 @Component
 public class ClinicEntityToDto {
-    public ClinicRequest entityToDto(Clinic clinic) {
+    public ClinicRequest entityToDto(Optional<Clinic> clinic) {
         ModelMapper modelMapper = new ModelMapper();
         ClinicRequest clinicRequest = modelMapper.map(clinic, ClinicRequest.class);
         return clinicRequest;
@@ -18,7 +19,7 @@ public class ClinicEntityToDto {
 
     public List<ClinicRequest> entityToDto(List<Clinic> clinics) {
 
-        return	clinics.stream().map(x -> entityToDto(x)).collect(Collectors.toList());
+        return	clinics.stream().map(x -> entityToDto(Optional.ofNullable(x))).collect(Collectors.toList());
 
     }
 }

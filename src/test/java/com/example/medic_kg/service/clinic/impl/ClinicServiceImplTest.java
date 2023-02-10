@@ -2,13 +2,13 @@ package com.example.medic_kg.service.clinic.impl;
 
 import com.example.medic_kg.repository.clinics.ClinicRepository;
 import com.example.medic_kg.repository.user.UserRepository;
+import com.example.medic_kg.service.user.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.mockito.Mockito.verify;
@@ -18,13 +18,14 @@ import static org.mockito.Mockito.verify;
 class ClinicServiceImplTest {
 
     @Mock private ClinicRepository clinicRepository;
+    @Mock private UserRepository userRepository;
     private AutoCloseable autoCloseable;
     private ClinicServiceImpl underTest;
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        underTest = new ClinicServiceImpl(clinicRepository);
+        underTest = new ClinicServiceImpl(clinicRepository, (UserService) userRepository);
     }
 
     @AfterEach

@@ -1,6 +1,7 @@
 package com.example.medic_kg.controller.doctor;
 
 import com.example.medic_kg.dto.DoctorRequest;
+import com.example.medic_kg.entity.doctor.Doctor;
 import com.example.medic_kg.service.doctor.impl.DoctorServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class DoctorController {
     }
 
     @GetMapping("/doctor/{id}")
-    public ResponseEntity<String> getDoctor(@PathVariable int id) {
-        return doctorService.findById(id);
+    public Doctor getDoctor(@PathVariable int id) {
+        return doctorService.getById(id);
     }
 
     @PostMapping("/add/doctors")

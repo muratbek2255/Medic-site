@@ -24,7 +24,7 @@ public class ClinicController {
 
     @GetMapping("/clinic/{id}")
     public ResponseEntity<String> getClinic(@PathVariable int id) {
-        return clinicService.findById(id);
+        return clinicService.getById(id);
     }
 
     @PostMapping("/add/clinics")
